@@ -21,8 +21,7 @@ my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT
 pd_df = my_dataframe.to_pandas()
 fruit_list = pd_df['FRUIT_NAME'].tolist()
 
-# Show fruit options table
-st.dataframe(data=pd_df, use_container_width=True)
+# ✅ Removed the table display (st.dataframe)
 
 # Multi-select for ingredients
 ingredients_list = st.multiselect('Choose up to 5 Ingredients:', fruit_list, max_selections=5)
@@ -47,8 +46,8 @@ if ingredients_list:
         # Get SEARCH_ON value
         search_on = pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
 
-        # Show sentence like screenshot
-        st.write(f"The search value for {fruit_chosen} is {search_on}.")
+        # Show sentence like screenshot (bold for clarity)
+        st.markdown(f"**The search value for {fruit_chosen} is {search_on}.**")
 
         # Show Nutrition Info
         st.subheader(f"{fruit_chosen} Nutrition Information")
