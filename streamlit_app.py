@@ -27,7 +27,7 @@ fruit_list = pd_df['FRUIT_NAME'].tolist()
 ingredients_list = st.multiselect('Choose up to 5 Ingredients:', fruit_list, max_selections=5)
 
 if ingredients_list:
-    ingredients_string = ' '.join(ingredients_list)
+    ingredients_string = ','.join(ingredients_list)
 
     # Insert order into Snowflake
     my_insert_stmt = f"""
