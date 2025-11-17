@@ -23,19 +23,23 @@ fruit_list = pd_df['FRUIT_NAME'].tolist()
 
 # ✅ Removed the table display (st.dataframe)
 
-# Multi-select for ingredients
+# ✅ Multi-select for ingredients
 ingredients_list = st.multiselect('Choose up to 5 Ingredients:', fruit_list, max_selections=5)
 
 if ingredients_list:
+    # ✅ Use comma-separated values (no spaces after commas)
     ingredients_string = ','.join(ingredients_list)
 
-    # Insert order into Snowflake
+    # ✅ Build the INSERT statement
     my_insert_stmt = f"""
         INSERT INTO smoothies.public.orders(ingredients, name_on_order)
         VALUES ('{ingredients_string}', '{name_on_order}')
     """
+
+    # Show the SQL for debugging
     st.write(my_insert_stmt)
 
+    # ✅ Submit button
     time_to_insert = st.button('Submit Order')
     if time_to_insert:
         session.sql(my_insert_stmt).collect()
@@ -46,7 +50,7 @@ if ingredients_list:
         # Get SEARCH_ON value
         search_on = pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
 
-        # Show sentence like screenshot (bold for clarity)
+        # Show sentence
         st.markdown(f"**The search value for {fruit_chosen} is {search_on}.**")
 
         # Show Nutrition Info
